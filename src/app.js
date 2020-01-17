@@ -9,6 +9,7 @@ const notesRouter = require('./notes/notes-router')
 
 
 const app = express();
+app.use(cors())
 
 const morganSetting = NODE_ENV === 'production' ? 'tiny' : 'dev';
 app.use(morgan(morganSetting))
@@ -18,7 +19,6 @@ app.use('/api/notes', notesRouter)
 
 
 
-app.use(cors())
 
 
 

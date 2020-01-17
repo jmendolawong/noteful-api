@@ -31,8 +31,8 @@ foldersRouter
   })
   // Get the data from the request body (readable by bodyParser) and then put it in newNote
   .post(bodyParser, (req, res, next) => {
-    const { id, name } = req.body
-    const newFolder = { id, name }
+    const { name } = req.body
+    const newFolder = { name }
 
     // Run through to make sure supplied data is there for non null column
     for (const [key, value] of Object.entries(newFolder)) {
@@ -130,7 +130,16 @@ foldersRouter
       folderToUpdate
     )
       .then(rowsAffected => {
-        res.status(204).end()
+        res.status(204)
+          .get((req, res, next) => {
+            FoldersService.getAllFolders(
+              req.app.get('db')
+            )
+              .then(folders => {
+                res.json(folders.map(sanitizeFolders))
+              })
+              .catch(next)
+          })
       })
       .catch(next)
   })

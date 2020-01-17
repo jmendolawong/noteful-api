@@ -13,7 +13,7 @@ const sanitizeNote = note => ({
   id: note.id,
   name: xss(note.name),
   modified: note.modified,
-  folderId: note.folderId,
+  folderid: note.folderid,
   content: xss(note.content)
 })
 
@@ -35,8 +35,9 @@ notesRouter
   })
   .post(bodyParser, (req, res, next) => {
     // Get the data from the request body (readable by bodyParser) and then put it in newNote
-    const { name, modified, folderId, content = "" } = req.body
-    const newNote = { name, modified, folderId }
+    const { name, modified, folderid, content = "" } = req.body
+    const newNote = { name, modified, folderid}
+    
 
     // Run through to make sure supplied data is there for non null column
     for (const [key, value] of Object.entries(newNote)) {
@@ -117,15 +118,15 @@ notesRouter
   // make sure they're not trying to update to null
   // then plug them in
   .patch(bodyParser, (req, res, next) => {
-    const { name, modified, folderId, content = "" } = req.body
-    const noteToUpdate = { name, modified, folderId, contents }
+    const { name, modified, folderid, content = "" } = req.body
+    const noteToUpdate = { name, modified, folderid, contents }
 
     const numOfValues = Object.values(noteToUpdate).filter(Boolean).length
     if (numOfValues === 0) {
       return res
         .status(400)
         .json({
-          error: { message: `Req body must contain at least 'name', 'modified', or 'folderId` }
+          error: { message: `Req body must contain at least 'name', 'modified', or 'folderid` }
         })
     }
 
