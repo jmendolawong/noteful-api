@@ -69,8 +69,7 @@ foldersRouter
 */
 foldersRouter
   .route('/:folder_id')
-
-  // Use the .all handler to catch error for all following CRUD operations if note doesn't exist
+  // Use the .all handler to catch error for all following CRUD operations if folder doesn't exist
   .all((req, res, next) => {
     FoldersService.getFolderById(
       req.app.get('db'),

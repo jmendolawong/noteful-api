@@ -14,13 +14,7 @@ const NotesService = {
       .first()
   },
 
-  //does this need to be added to folder?
-  getNotesByFolder(knex, folderId) {
-    return knex
-      .select('*')
-      .from('notes')
-      .where({ folderId })
-  },
+ 
 
   //POST
   addNote(knex, noteData) {
